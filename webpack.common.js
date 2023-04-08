@@ -1,28 +1,27 @@
 const path = require('path');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[contenthash].bundle.js',
-    chunkFilename: '[name].[contenthash].chunk.bundle.js',
+    path: path.resolve(__dirname, 'build'),
+    filename: '[name].[contenthash:8].bundle.js',
     clean: true,
     publicPath: '/',
   },
   module: {
     rules: [
       {
-        test: /\.(ts|tsx)$/,
-        exclude: /(node_modules)/,
-        use: ['babel-loader', 'ts-loader'],
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: ['babel-loader'],
       },
       {
-        test: /\.(png|jpe?g|gif|ico|webp)$/,
+        test: /\.(png|jpe?g|gif|ico|webp)$/i,
         type: 'asset/resource',
         generator: {
-          filename: 'images/[name].[contenthash][ext]',
+          filename: 'images/[name].[contenthash:8][ext]',
         },
       },
       { test: /\.svg$/, use: ['@svgr/webpack'] },
@@ -35,20 +34,9 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin(),
   ],
   resolve: {
-    extensions: ['.js', '.ts', '.jsx', '.tsx'],
+    extensions: ['.tsx', '.ts', '.jsx', '.js'],
     alias: {
       '@': path.resolve(__dirname, 'src'),
-    },
-  },
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        react: {
-          test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom|react-router)[\\/]/,
-          name: 'react',
-          chunks: 'all',
-        },
-      },
     },
   },
 };
