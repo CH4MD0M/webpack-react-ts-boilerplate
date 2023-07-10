@@ -1,21 +1,25 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: '[name].[contenthash:8].bundle.js',
+    filename: 'js/[name].[contenthash:8].bundle.js',
+    chunkFilename: 'js/[id].[contenthash:8].chunk.js',
     clean: true,
     publicPath: '/',
   },
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
+        test: /\.tsx?$/i,
         exclude: /node_modules/,
-        use: ['babel-loader'],
+        use: 'babel-loader',
       },
       {
         test: /\.(png|jpe?g|gif|ico|webp)$/i,
@@ -30,13 +34,25 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: 'public/index.html',
+      favicon: 'public/favicon.ico',
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'public',
+          globOptions: {
+            ignore: ['**/index.html', '**/favicon.ico'],
+          },
+        },
+      ],
     }),
     new ForkTsCheckerWebpackPlugin(),
+    new Dotenv({
+      systemvars: true,
+    }),
   ],
   resolve: {
-    extensions: ['.tsx', '.ts', '.jsx', '.js'],
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-    },
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    plugins: [new TsconfigPathsPlugin()],
   },
 };
