@@ -3,11 +3,14 @@ const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
   mode: 'development',
-  devtool: 'eval-source-map',
+  cache: {
+    type: 'memory',
+  },
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
-        test: /\.(sa|sc|c)ss$/i,
+        test: /\.s?css$/i,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
@@ -18,5 +21,13 @@ module.exports = merge(common, {
     historyApiFallback: true,
     compress: true,
     port: 3000,
+    liveReload: true,
+    /* proxy: {
+      '/api': {
+        target: 'http://localhost:5000',
+        changeOrigin: true,
+        secure: false,
+      },
+    }, */
   },
 });

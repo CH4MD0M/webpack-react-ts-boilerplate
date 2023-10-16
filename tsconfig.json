@@ -1,19 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["ES2020", "DOM"],
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "module": "esnext",
+    "target": "esnext",
     "moduleResolution": "Node",
+    "isolatedModules": true,
     "strict": true,
     "strictNullChecks": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "sourceMap": true,
     "resolveJsonModule": true,
     "downlevelIteration": true,
-    "forceConsistentCasingInFileNames": false
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["src"],
+  "include": [".eslintrc.js", "src"],
+  "exclude": ["node_modules", "build"],
   "extends": "./tsconfig.paths.json"
 }

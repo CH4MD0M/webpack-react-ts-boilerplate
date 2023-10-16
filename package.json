@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "browserslist": [
+    "last 2 versions",
+    "safari >= 7"
+  ],
   "dependencies": {
     "@babel/runtime-corejs3": "^7.22.6",
     "react": "^18.2.0",
@@ -19,6 +23,7 @@
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
     "@types/styled-components": "^5.1.26",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
     "@typescript-eslint/parser": "^5.56.0",
     "babel-loader": "^9.1.2",
     "clean-webpack-plugin": "^4.0.0",
@@ -27,22 +32,30 @@
     "css-minimizer-webpack-plugin": "^4.2.2",
     "dotenv-webpack": "^8.0.1",
     "eslint": "^8.36.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.33.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.5",
+    "prettier": "^3.0.1",
     "sass": "^1.60.0",
     "sass-loader": "^13.2.1",
+    "speed-measure-webpack-plugin": "^1.5.0",
     "style-loader": "^3.3.2",
     "terser-webpack-plugin": "^5.3.7",
     "tsconfig-paths-webpack-plugin": "^4.0.1",
     "typescript": "^5.0.4",
     "webpack": "^5.76.3",
+    "webpack-bundle-analyzer": "^4.9.0",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.13.1",
     "webpack-merge": "^5.8.0"
   },
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "type-check": "tsc --noEmit"
   }
 }

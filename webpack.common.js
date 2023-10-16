@@ -9,8 +9,8 @@ module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: 'js/[name].[contenthash:8].bundle.js',
-    chunkFilename: 'js/[id].[contenthash:8].chunk.js',
+    filename: 'js/[name].[chunkhash:8].bundle.js',
+    chunkFilename: 'js/[name].[chunkhash:8].chunk.js',
     clean: true,
     publicPath: '/',
   },
@@ -19,7 +19,11 @@ module.exports = {
       {
         test: /\.tsx?$/i,
         exclude: /node_modules/,
-        use: 'babel-loader',
+        loader: 'babel-loader',
+        options: {
+          cacheDirectory: true,
+          cacheCompression: false,
+        },
       },
       {
         test: /\.(png|jpe?g|gif|ico|webp)$/i,
@@ -46,7 +50,9 @@ module.exports = {
         },
       ],
     }),
-    new ForkTsCheckerWebpackPlugin(),
+    new ForkTsCheckerWebpackPlugin({
+      async: false,
+    }),
     new Dotenv({
       systemvars: true,
     }),
